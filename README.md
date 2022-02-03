@@ -1,1 +1,543 @@
 # JSnotes
+
+# Table of Contents
+
+- Introduction
+- Variables & Data Types
+  - Concatenation
+  - Template String
+- String Properties & Methods
+- Arrays
+- Object Literals
+  - Array of Objects
+- Loops
+
+  - While Loop
+  - For Loop
+  - Examples (to-do-list)
+
+- High Order Array Methods
+- Conditionals
+  - Ternary Operator
+- Functions
+  - Arrow Functions
+- Object Oriented Programming (OOP)
+- DOM Selection
+- DOM Manipulation
+- Events
+- Basic Form Validation
+
+---
+
+## Introduction
+
+- JavaScript is a high level, interpreted programming language (no need to worry about memory management)
+- language of the front-end (client/browser) + back-end (server = Node.js)
+- add JavaScript at the end of html file (right before ending body tag `</body>`)
+  - we want html and css to load first
+  - can be written within the html file, bound by `<script>` tags
+  - can be sourced from a separate js file using src attribute inside script tag
+  - `<script src="myJSfile.js"></script>`
+- webpages have consoles, can output/run javascript in the console
+  - run javascript functions
+  - clear() to clear the console
+  - output to the console = console.log(xyz)
+  - log is one of the method to use in the console
+  - MDN console = lists out the methods for console = great for debugging
+- var, let, const = let us assign value to a variable
+  - **var** = globally scoped (can be replaced again and again locally and globally with same name)
+  - **let** = block level, can reassign value
+  - **const** = block level, can only be of one initial value (has to initialize a value)
+    - typically, always use const unless we know we gonna reassign (e.g. score in a game)
+    - cannot change const value by reassigning another value
+    - but const array or object, elements inside the array or object can still be modified
+
+---
+
+# Variables & Data Types
+
+```js
+var common = 2;
+common = 3;
+var common = "random";
+```
+
+assignment using var with the same variable name can be repeated throughout the codes, can lead to bugs.
+
+```js
+let reassign = "white";
+reassign = "light blue";
+let reassign = "yellow"; // error
+```
+
+we can reassign value to an existing variable but cannot call let twice using the same variable name (can be useful to keep changing number/string variable)
+
+```js
+const solid = "glass";
+solid = "water"; // error
+const solid = "gas"; // error
+```
+
+## Data Types
+
+> Data Types: String, Numbers, Boolean, null, undefined, Symbol
+
+```js
+const fName = "Bob"; // string
+const age = 77; // number
+const rating = 1.7; // number
+const isCool = false; // boolean
+const x = null; // null;
+const y = undefined; // undefined
+let z; // z == undefined
+```
+
+both integers and decimals are Numbers (no float or decimal type)
+
+using `let`, if no value is directly assigned then the variable is undefined
+
+because we have to assign value for every const, undefined can only be assigned directly
+
+> to test type = typeof xyz returns "object" for example
+
+```js
+const typeExample = typeof age;
+console.log(typeExample + " is the type of data for age");
+console.log(typeof x);
+```
+
+typeof x will show object, but null is not object (bogus result)
+
+## Concatenation
+
+```js
+const conca1 = "My name is " + fName + " and my age is " + age;
+```
+
+This is the old way of incorporating variable into a string (use template string instead)
+
+## Template String
+
+> use back ticks ( `` ) instead of quotation marks
+
+> grab variable by using the dollar sign and curly brackets ${var}
+
+```js
+const ts1 = `My name is ${fName} and my age is ${age}`;
+```
+
+This will produce the same result as the example in concatenation without having to break apart components for each variable.
+
+---
+
+# String Properties & Methods
+
+> PROPERTIES don't have ( ) after it &
+> METHODS are functions associated with an object.
+
+#### 1. `str.length` = produces the length of the string (Number)
+
+```js
+const s1 = "Hello World";
+s1.length == 11; // true
+```
+
+#### 2. `str.toUpperCase()` = converts the string into all uppercase
+
+#### 3. `str.substring(n, m)`, where n = start (inclusive); m = end (exclusive)
+
+characters in string starts in position 0 and the last character is in position (str.length - 1)
+
+```js
+s1.substring(1, 4) == "ell"; // true
+s1.subtring(0, str.length) == "Hello World"; // the whole string
+// m = str.length; so the last included character is (str.length - 1) = last
+
+// we can stack multiple methods
+s1.substring(2, s1.length - 3).toUpperCase() == "LLO WO"; // true
+```
+
+#### 4. `str.split(x)` = produces an array in which the string is split by x (splitter)
+
+```js
+// no splitter
+s1.split() -> ["Hello World"] // essentially turns a string into an array
+// split each character in the string
+s1.split("") -> ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"]
+// split each word separated by a space
+s1.split(" ") -> ["Hello", "World"]
+
+const s2 = "tech, computers, it, code";
+s2.toUpperCase().split(", ") -> ["TECH", "COMPUTERS", "IT", "CODE"]
+```
+
+---
+
+# Array
+
+> an array is an object that hold multiple values (multi types too)
+
+How to construct an array:
+
+```js
+const a1 = new Array(1, 2, 3, 4, 5); // new = constructor
+const a2 = ["cats", 10, a1]; // [] makes an array too.
+```
+
+#### 1. `arr.length` = produces the number of items in the array (Number)
+
+```js
+a1.length == 5; // true
+a2.length == 3; // true
+```
+
+#### 2. `arr[n]` = access the *n*th item in the array, where 0 >= n >= (`arr.length` - 1)
+
+```js
+const aprop2 = a2`a2.length - 1`; the last item
+arr.push(xyz) = add item to the last position in array | manipulate array
+arr.unshift(xyz) = add item to the first position in array
+a1.push(6);
+a2.unshift(true);
+arr.pop() = take out the last item, can be assigned to another var
+arr.shift() = take out the first item, can also be reassigned
+const amethod3 = a2.pop(); amethod3 = 20
+const amethod4 = a1.shift(); amethod4 = 1
+const amethod5 = Array.isArray(a1); false; if we change a1 to s1
+const amethod6 = a2.indexOf(10); produces -1 if item not found
+```
+
+---
+
+# Object Literals
+
+> object works like key, value pair; object = {key1: value1, key2: value2, ...}
+
+object = {prop1: abc, prop2: def, ...}
+object.prop1 == abc (how to call the prop in an object)
+const o1 = {
+firstName: "John",
+lastName: "Doe",
+age: 30,
+hobbies: `"swimming", "cycling"`,
+address: {
+streetName: "Silverling",
+streetNum: 13,
+postalCode: "M8M 8M8",
+},
+};
+
+const oprop1 = o1.hobbies`o1.hobbies.length - 1`;
+const oprop2 = o1.address.streetName;
+console.log(o1.firstName, o1.lastName); can separate different logs with commas
+
+const {
+firstName,
+lastName,
+address: { postalCode },
+} = o1;
+console.log(firstName); pulling {xyz} out of o1
+console.log(postalCode); pulling embedded property
+
+adding/replacing property to an existing object
+o1.email = "johndoe@gmail.com";
+o1.age = 27;
+
+delete a property
+delete o1.address.streetNum;
+
+Array of objects
+
+---
+
+toc.push({ title: "Array of Objects", shortcut: "`ARROB`" });
+const todos = `{ id: 1, text: "Take out trash", isCompleted: true, }, { id: 2, text: "Meeting with boss", isCompleted: false, }, { id: 3, text: "Dentist appt", isCompleted: false, },`;
+
+print out "Meeting with boss"
+const test1 = todos`1`.text;
+
+json is a data format
+
+- used a lot in full-stack, using APIs sending/receive data to server (in json format)
+- https:www.freeformatter.com/json-formatter.html
+- json format similar to array of objects
+- differences:
+  1. double quotes around property names
+  2. strings are all in double quotes (no single quotes)
+- knowing this we can format our javacript to be ready to export to a server = JSON.strinigy(arrObj)
+
+const todoJSON = JSON.stringify(todos);
+console.log(todoJSON);
+
+While loops
+
+---
+
+toc.push({ title: "While Loops", shortcut: "`WLOOP`" });
+initialize variable outside of the while statement, then in/decrement inside the loop
+
+function f2() {
+let i = 0;
+creates an ascending array of even number from 0 to 10
+const myArr = ``; while (i <= 10) { myArr.unshift(i); can keep track of what loop number below: console.log(`While Loop Number ${i}`); console.log(myArr`0`); unshift adds to first position
+
+    i += 2;  have to do increment inside the while statement
+
+}
+console.log(myArr);
+}
+
+For loops
+
+---
+
+toc.push({ title: "For Loops", shortcut: "`FLOOP`" });
+format: for(let x; y; z)
+
+- x = initializatin statement (executed only once)
+- y = condition statement (if true execute loop, if false stop)
+- z = final expression (increment/decrement loop counter)
+
+function f1() {
+creates a descending array from 10 to 0
+const myArr = ``; for (let i = 10; i >= 0; i--) { myArr.push(i); can keep track of what loop number below: console.log(`For Loop Number: ${i}`); console.log(myArr`myArr.length - 1`); push adds to last position
+}
+console.log(myArr);
+}
+
+Examples of loops to use in the todos list
+
+---
+
+toc.push({ title: "Loops Examples", shortcut: "`TODOS`" });
+function f3(todolist, myProp) {
+Data types integrity check:
+if (typeof todolist != "object") {
+return "Invalid! Parameter todolist has to be an array"; an array of objects
+}
+
+if (typeof myProp != "string") {
+return "Invalid! Parameter myProp has to be a string";
+}
+check if myProp is present:
+assumption = if myProp is present, has to be found in every object in the array
+if (todolist`0`.hasOwnProperty(myProp) == false) {
+return myProp + " is not a property in this todolist";
+}
+
+for (let i = 0; i < todolist.length; i++) {
+console.log(`To-do No. ${i + 1} is ` + `\"${todolist`i`` myProp`}\"`); Using blackslash "\" will let any word or char to escape the quotation mark todolist`i ``myprop`= goes through each item in index i and grab the prop`myProp` is used instead of .myProp = ."string" is not valid
+}
+}
+
+f3(todos, "text"); will print the description of each to-do task
+
+this code below can also cycle through items in array faster
+function f4() {
+for (let todo of todos) {
+this will cycle through each items (todo) in todos
+console.log(todo.text);
+console.log(todo.isCompleted);
+for each object (todo), print the text, then the isCompleted
+and then move on to the next item in the array
+}
+}
+
+High Order Array Methods
+
+---
+
+toc.push({ title: "High Order Array Methods", shortcut: "`HOARM`" });
+format: myArray.method(function(a, ...) {xyz})
+
+- a = variable to use for each instance in myArray
+  see
+
+  1.) forEach = loops through each items in the array
+
+- xyz = what will be executed for each loop
+  function f5() {
+  todos.forEach(function (todo) {
+  console.log(todo.id);
+  });
+  }
+  2.) map = create a new array from an array (assign value with const newArray)
+- xyz = return xyz -> push(xyz) into the new array
+  function f6() {
+  const todoText = todos.map(function (todo) {
+  return todo.text; for EACH instance, push the (todo.text)
+  });
+  console.log(todoText);
+  }
+  3.) filter = create a new array based on a condition (only part of the original)
+- xyz = return (cond.) -> push each instance in which the condition is met
+  function f7() {
+  const todoNotCompleted = todos.filter(function (todo) {
+  return todo.isCompleted === false; for EACH return TRUE, push the (todo)
+  });
+  console.log(todoNotCompleted);
+  }
+  Combining methods
+  first filter only the odd id, out of the odd id, which one is completed, then print
+  function f8() {
+  const todoOddText = todos
+  .filter(function (todo) {
+  return todo.id % 2 == 1; create newArray1 = only odd ids
+  })
+  .filter(function (todoOdd) {
+  return todoOdd.isCompleted === true; newArray1.filter(...) -> create newArray2
+  })
+  .map(function (completed) {
+  return completed.text; newArray2.map(...) = last method -> assigned to todoOddText
+  })
+  .forEach((oddCompleted) => console.log(oddCompleted)); see `ARWFC` -> one-liner
+  }
+
+Conditionals
+
+---
+
+toc.push({ title: "Conditionals", shortcut: "`CONDI`" });
+if, else if, else statements
+format: if (cond) {expression} else if (cond) {expr.} else {expr.}
+
+== is equal to (e.g. `10` == "10" -> True)
+!= is not equal to (e.g. 10 != "Ten" -> True)
+=== is exactly the same as (e.g. 10 === 10.0 -> True)
+!== is not exactly the same as (e.g. 10.0 !== `10` -> True)
+function isTen(n) {
+if (n === 10) {
+console.log("=== matches data type! (exact same)");
+} else if (n == 10) {
+console.log("== does not match data type! (can be string)");
+} else {
+console.log("is not 10");
+}
+} `10` == "10.0" is False
+
+OR (||) + AND (&&)
+can help shorten code instead of nesting if statements
+
+function smallerThanFive(x, y) {
+if (x < 5 && y < 5) {
+console.log("both are smaller than 5");
+} else if (x < 5 || y < 5) {
+console.log("either x or y are smaller than 5");
+} else {
+console.log("neither are smaller than 5");
+}
+}
+
+Ternary operator
+
+---
+
+toc.push({ title: "Ternary Operator", shortcut: "`TEROP`" });
+commonly used to assign value based on a condition (if statements alt.)
+format: const x = (cond.) ? (if true) : (if false)
+can nest ternary operator within the (if true/false)
+
+function f9(a, b) {
+const score = a === b ? "Draw" : a > b ? "A wins" : "B wins";
+return score;
+}
+
+Swtiches
+
+---
+
+format:
+switch(val) {
+case (cond1): case values are tested with strict equality (===)
+do ...;
+break;
+case (cond 2): ...
+do ...;
+break;
+default:
+(default expression)...;
+}
+
+function f10(val) {
+let answer = "";
+switch (val) {
+case 1:
+case 2:
+answer = "Low Score...";
+break;
+case 3:
+case 4:
+answer = "Good Score!";
+break;
+case 5:
+answer = "Perfect!!!";
+break;
+default:
+answer = "Try again.";
+}
+return answer;
+}
+
+Functions
+
+---
+
+toc.push({ title: "Functions", shortcut: "`FUNCT`" });
+function addNums(n = 1, m = -3) {
+total = n + m;
+console.log(total);
+within a function parameter, we can set default value,
+if no value is assigned the default will be assigned
+if values assigned, it will overwrite the default values.
+}
+
+Arrow Functions
+
+---
+
+toc.push({ title: "Arrow Functions", shortcut: "`ARWFC`" });
+format:
+const (functionName) = (para1, para2, ...) => (function body)
+one-liner function body doesn't need {} and will return the expression
+
+same example function as above written in arrow function format
+const addTwoNums = (n = -4, m = -3) => {
+total = n + m;
+console.log(total);
+};
+
+same example, with one-liner
+const addTwoNumbers = (n = 1, m = 1) => n + m;
+
+calling all of these functions are the same, functionName(parameters)
+addNums() log displays -2, returns undefined
+addTwoNums(1,1) log displays 2 returns undefined
+addTwoNumbers(4) log display nothing, returns 1 `only assign value to first para`
+
+one-liner example, filter todos for incompletion, then print text
+see `HOARM` for methods explanation (long function version)
+const f11 = () => {
+todos
+.filter((todo) => todo.isCompleted === false)
+.forEach((incompleted) => console.log(incompleted.text));
+};
+
+Lexical This (not covered in depth in the course)
+
+Object Oriented Programming (OOP)
+
+---
+
+toc.push({ title: "Object Oriented Programming", shortcut: "`OBJOR`" });
+
+(DOM) Selection
+
+---
+
+toc.push({ title: "DOM Selection", shortcut: "`DOMSE`" });
+
+DOM Manipulation
+
+---
+
+toc.push({ title: "DOM Manipulation", shortcut: "`DOMMA`" });
