@@ -133,16 +133,16 @@ This will produce the same result as the example in concatenation without having
 > PROPERTIES don't have ( ) after it &
 > METHODS are functions associated with an object.
 
-#### 1. `str.length` = produces the length of the string (Number)
+### 1. `myStr.length` = produces the length of the string (Number)
 
 ```js
 const s1 = "Hello World";
 s1.length == 11; // true
 ```
 
-#### 2. `str.toUpperCase()` = converts the string into all uppercase
+### 2. `myStr.toUpperCase()` = converts the string into all uppercase
 
-#### 3. `str.substring(n, m)`, where n = start (inclusive); m = end (exclusive)
+### 3. `myStr.substring(n, m)`, where n = start (inclusive); m = end (exclusive)
 
 characters in string starts in position 0 and the last character is in position (str.length - 1)
 
@@ -155,7 +155,7 @@ s1.subtring(0, str.length) == "Hello World"; // the whole string
 s1.substring(2, s1.length - 3).toUpperCase() == "LLO WO"; // true
 ```
 
-#### 4. `str.split(x)` = produces an array in which the string is split by x (splitter)
+### 4. `myStr.split(x)` = produces an array in which the string is split by x (splitter)
 
 ```js
 // no splitter
@@ -179,30 +179,96 @@ How to construct an array:
 
 ```js
 const a1 = new Array(1, 2, 3, 4, 5); // new = constructor
-const a2 = ["cats", 10, a1]; // [] makes an array too.
+const a2 = [10, "cats", "dogs", a1]; // [] makes an array too.
 ```
 
-#### 1. `arr.length` = produces the number of items in the array (Number)
+### 1. `myArr.length` = produces the number of items in the array (Number)
 
 ```js
 a1.length == 5; // true
-a2.length == 3; // true
+a2.length == 4; // true
 ```
 
-#### 2. `arr[n]` = access the *n*th item in the array, where 0 >= n >= (`arr.length` - 1)
+### 2. `myArr[n]` = access the *n*th item in the array, where 0 >= n >= (`myArr.length` - 1)
 
 ```js
-const aprop2 = a2`a2.length - 1`; the last item
-arr.push(xyz) = add item to the last position in array | manipulate array
-arr.unshift(xyz) = add item to the first position in array
+a2[0] === 10;
+// Example 1: (what's in the second last position of the 4th item in a2)
+a2[3][a2[3].length - 2] == 4;
+
+// Example 2: (what's in the second last position of the last item in a2)
+let a2LastItem = a2[a2.length - 1];
+a2LastItem[a2LastItem.length - 2] == 4;
+```
+
+For now Example 1 and 2 refers to the same value. See below how modifying the array alter the positions.
+
+### 3. Modify items in an array using `push`, `pop`, `unshift`, `shift`. (This will alter the position of items in the array)
+
+> `myArr.push(xyz)` = add item to the **_last_** position in array
+
+```js
 a1.push(6);
-a2.unshift(true);
-arr.pop() = take out the last item, can be assigned to another var
-arr.shift() = take out the first item, can also be reassigned
-const amethod3 = a2.pop(); amethod3 = 20
-const amethod4 = a1.shift(); amethod4 = 1
-const amethod5 = Array.isArray(a1); false; if we change a1 to s1
-const amethod6 = a2.indexOf(10); produces -1 if item not found
+console.log(a1) -> [1, 2, 3, 4, 5, 6];
+
+a2.push("New Last");
+console.log(a2) -> [10, "cats", "dogs", a1, "New Last"];
+a2[3][a2[3].length - 2] == 5; // instead of 4 in Example 1
+
+a2LastItem = a2[a2.length - 1]; // reassign the current last item of a2
+a2LastItem[a2LastItem.length - 2] == "s"; // instead of 4 in Example 2
+```
+
+Since we added a1 as part of the item inside a2, modifying a1 will also modify the a1 found within a2.
+
+Since we pushed an item to the last position, it will alter the counting from the back of the array (e.g. `a2.length - 1`), but absolute position calls like `a2[0]` will not be affected.
+
+> `myArr.pop()` = grab the **_last_** item in the array (can be assigned to a variable)
+
+```js
+const drawLast = a2.pop();
+const text1 = `The last item in a2 was: ${drawLast}`;
+console.log(text1) -> "The last item in a2 was: New Last"
+console.log(a2) -> [10, "cats", "dogs", a1];
+```
+
+> `myArr.unshift(xyz)` = add item to the first position in array
+
+```js
+a2.unshift("New First");
+console.log(a2) -> ["New First", 10, "cats", "dogs", a1];
+a2[3][a2[3].length - 2] == "g"; // instead of 4 in Example 1
+
+a2LastItem = a2[a2.length - 1]; // reassign the current last item of a2
+a2LastItem[a2LastItem.length - 2] == 5 // instead of 4 in Example 2
+```
+
+Since we added an item to the first position and push everything back one position further, it will alter the counting from the beginning of the array (e.g. `a2[0]`), but relative position from the back like `a2.length - 1` will not be affected.
+
+> `myArr.shift()` = grab the first item in the array (can be assigned to a variable)
+
+```js
+const drawFirst = a1.shift();
+const text2 = `The next in line is: ${drawFirst}`;
+console.log(text2) -> "The next in line is:  1"
+console.log(a1) -> [2, 3, 4, 5, 6]
+```
+
+### 4. `Array.isArray(xyz)` = returns `true` if xyz is an array, otherwise `false`
+
+```js
+Array.isArray(a1); // true
+Array.isArray(s1); // false
+Array.isArray(a2LastItem); // true
+```
+
+### 5. `myArr.indexOf(val)` = returns the index of first occurence of `val` if it's an item in myArr, otherwise returns -1
+
+```js
+a1.indexOf(4) == 2;
+a1.unshift(4);
+a1.indexOf(4) == 0;
+a2.indexOf(4) == -1;
 ```
 
 ---
