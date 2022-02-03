@@ -1,5 +1,3 @@
-# JSnotes
-
 # Table of Contents
 
 - Introduction
