@@ -1,11 +1,11 @@
 # Table of Contents
 
-- Introduction
-- Variables & Data Types
+- [Introduction](#introduction-intro)
+- [Variables & Data Types](#variables--data-types-vardt)
   - Concatenation
   - Template String
-- String Properties & Methods
-- Arrays
+- [String Properties & Methods](#string-properties--methods-strpm)
+- [Arrays](#array-properties--methods-arrpm)
 - Object Literals
   - Array of Objects
 - Loops
@@ -27,7 +27,7 @@
 
 ---
 
-## Introduction
+# Introduction {#intro}
 
 - JavaScript is a high level, interpreted programming language (no need to worry about memory management)
 - language of the front-end (client/browser) + back-end (server = Node.js)
@@ -52,7 +52,7 @@
 
 ---
 
-# Variables & Data Types
+# Variables & Data Types {#vardt}
 
 ```js
 var common = 2;
@@ -90,11 +90,9 @@ const y = undefined; // undefined
 let z; // z == undefined
 ```
 
-both integers and decimals are Numbers (no float or decimal type)
-
-using `let`, if no value is directly assigned then the variable is undefined
-
-because we have to assign value for every const, undefined can only be assigned directly
+- both integers and decimals are Numbers (no float or decimal type)
+- using `let`, if no value is directly assigned then the variable is undefined
+- because we have to assign value for every const, undefined can only be assigned directly
 
 > to test type = typeof xyz returns "object" for example
 
@@ -128,7 +126,7 @@ This will produce the same result as the example in concatenation without having
 
 ---
 
-# String Properties & Methods
+# String Properties & Methods {#strpm}
 
 > PROPERTIES don't have ( ) after it &
 > METHODS are functions associated with an object.
@@ -171,7 +169,7 @@ s2.toUpperCase().split(", ") -> ["TECH", "COMPUTERS", "IT", "CODE"]
 
 ---
 
-# Array
+# Array Properties & Methods {#arrpm}
 
 > an array is an object that hold multiple values (multi types too)
 
@@ -221,7 +219,7 @@ a2LastItem[a2LastItem.length - 2] == "s"; // instead of 4 in Example 2
 
 Since we added a1 as part of the item inside a2, modifying a1 will also modify the a1 found within a2.
 
-Since we pushed an item to the last position, it will alter the counting from the back of the array (e.g. `a2.length - 1`), but absolute position calls like `a2[0]` will not be affected.
+Since we pushed an item to the last position, it will alter the position counting from the back of the array (e.g. `a2.length - 1`), but absolute position calls like `a2[0]` will not be affected.
 
 > `myArr.pop()` = grab the **_last_** item in the array (can be assigned to a variable)
 
@@ -232,7 +230,7 @@ console.log(text1) -> "The last item in a2 was: New Last"
 console.log(a2) -> [10, "cats", "dogs", a1];
 ```
 
-> `myArr.unshift(xyz)` = add item to the first position in array
+> `myArr.unshift(xyz)` = add item to the **_first_** position in array
 
 ```js
 a2.unshift("New First");
@@ -245,7 +243,7 @@ a2LastItem[a2LastItem.length - 2] == 5 // instead of 4 in Example 2
 
 Since we added an item to the first position and push everything back one position further, it will alter the counting from the beginning of the array (e.g. `a2[0]`), but relative position from the back like `a2.length - 1` will not be affected.
 
-> `myArr.shift()` = grab the first item in the array (can be assigned to a variable)
+> `myArr.shift()` = grab the **_first_** item in the array (can be assigned to a variable)
 
 ```js
 const drawFirst = a1.shift();
