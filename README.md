@@ -275,19 +275,26 @@ a2.indexOf(4) == -1;
 
 > object works like key, value pair; object = {key1: value1, key2: value2, ...}
 
+How to create and access properties in objects:
+
+```js
 object = {prop1: abc, prop2: def, ...}
-object.prop1 == abc (how to call the prop in an object)
+object.prop1 // == abc (how to call the prop in an object)
+```
+
+```js
 const o1 = {
-firstName: "John",
-lastName: "Doe",
-age: 30,
-hobbies: `"swimming", "cycling"`,
-address: {
-streetName: "Silverling",
-streetNum: 13,
-postalCode: "M8M 8M8",
-},
+  firstName: "John",
+  lastName: "Doe",
+  age: 30,
+  hobbies: `"swimming", "cycling"`,
+  address: {
+    streetName: "Silverling",
+    streetNum: 13,
+    postalCode: "M8M 8M8",
+  },
 };
+```
 
 const oprop1 = o1.hobbies`o1.hobbies.length - 1`;
 const oprop2 = o1.address.streetName;
