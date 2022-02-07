@@ -6,8 +6,8 @@
   - Template String
 - [String Properties & Methods](#string-properties--methods-strpm)
 - [Arrays](#array-properties--methods-arrpm)
-- Object Literals
-  - Array of Objects
+- [Object Literals](#object-literals-objct)
+- [Array of Objects](#array-of-objects-arrob)
 - Loops
 
   - While Loop
@@ -27,7 +27,7 @@
 
 ---
 
-# Introduction {#intro}
+# Introduction {#INTRO}
 
 - JavaScript is a high level, interpreted programming language (no need to worry about memory management)
 - language of the front-end (client/browser) + back-end (server = Node.js)
@@ -52,7 +52,7 @@
 
 ---
 
-# Variables & Data Types {#vardt}
+# Variables & Data Types {#VARDT}
 
 ```js
 var common = 2;
@@ -60,7 +60,7 @@ common = 3;
 var common = "random";
 ```
 
-assignment using var with the same variable name can be repeated throughout the codes, can lead to bugs.
+Assignment using var with the same variable name can be repeated throughout the codes, can lead to bugs.
 
 ```js
 let reassign = "white";
@@ -68,7 +68,7 @@ reassign = "light blue";
 let reassign = "yellow"; // error
 ```
 
-we can reassign value to an existing variable but cannot call let twice using the same variable name (can be useful to keep changing number/string variable)
+We can reassign value to an existing variable but cannot call let twice using the same variable name (can be useful to keep changing number/string variable)
 
 ```js
 const solid = "glass";
@@ -102,7 +102,7 @@ console.log(typeExample + " is the type of data for age");
 console.log(typeof x);
 ```
 
-typeof x will show object, but null is not object (bogus result)
+`typeof x` will show object, but null is not object (bogus result)
 
 ## Concatenation
 
@@ -116,7 +116,7 @@ This is the old way of incorporating variable into a string (use template string
 
 > use back ticks ( `` ) instead of quotation marks
 
-> grab variable by using the dollar sign and curly brackets ${var}
+> grab variable by using the dollar sign and curly brackets `${var}`
 
 ```js
 const ts1 = `My name is ${fName} and my age is ${age}`;
@@ -126,7 +126,7 @@ This will produce the same result as the example in concatenation without having
 
 ---
 
-# String Properties & Methods {#strpm}
+# String Properties & Methods {#STRPM}
 
 > PROPERTIES don't have ( ) after it &
 > METHODS are functions associated with an object.
@@ -169,11 +169,11 @@ s2.toUpperCase().split(", ") -> ["TECH", "COMPUTERS", "IT", "CODE"]
 
 ---
 
-# Array Properties & Methods {#arrpm}
+# Array Properties & Methods {#ARRPM}
 
 > an array is an object that hold multiple values (multi types too)
 
-How to construct an array:
+#### How to construct an array:
 
 ```js
 const a1 = new Array(1, 2, 3, 4, 5); // new = constructor
@@ -252,7 +252,7 @@ console.log(text2) -> "The next in line is:  1"
 console.log(a1) -> [2, 3, 4, 5, 6]
 ```
 
-### 4. `Array.isArray(xyz)` = returns `true` if xyz is an array, otherwise `false`
+### 4. `Array.isArray(xyz)` = returns true if `xyz` is an array, otherwise false
 
 ```js
 Array.isArray(a1); // true
@@ -271,146 +271,213 @@ a2.indexOf(4) == -1;
 
 ---
 
-# Object Literals
+# Object Literals {#OBJCT}
 
 > object works like key, value pair; object = {key1: value1, key2: value2, ...}
 
-How to create and access properties in objects:
+#### How to create and access properties in objects:
 
 ```js
-object = {prop1: abc, prop2: def, ...}
-object.prop1 // == abc (how to call the prop in an object)
+const object = {prop1: a, prop2: b, ...}
 ```
+
+Just like key-value pair, each property (key) of an object can only be paired to one value, the value can be an array that contains multiple items.
 
 ```js
 const o1 = {
   firstName: "John",
   lastName: "Doe",
   age: 30,
-  hobbies: `"swimming", "cycling"`,
+  hobbies: ["swimming", "cycling", "hiking"],
   address: {
-    streetName: "Silverling",
+    streetName: "Silverling St",
     streetNum: 13,
     postalCode: "M8M 8M8",
   },
 };
 ```
 
-const oprop1 = o1.hobbies`o1.hobbies.length - 1`;
-const oprop2 = o1.address.streetName;
-console.log(o1.firstName, o1.lastName); can separate different logs with commas
+#### How to access the value of a property:
 
-const {
-firstName,
-lastName,
-address: { postalCode },
-} = o1;
-console.log(firstName); pulling {xyz} out of o1
-console.log(postalCode); pulling embedded property
+```js
+object.prop1; // == a (using . followed by the property name)
+object["prop2"]; // == b (encasing the string form of the property name in [])
+```
 
-adding/replacing property to an existing object
-o1.email = "johndoe@gmail.com";
-o1.age = 27;
+Using the . notation can only call property with one word (no space in between), generally using [ ] is more flexible as we can have a parameter in a function to take in a string to match the name of the property.
 
-delete a property
+Some examples to use information within an object:
+
+```js
+const oprop1 = o1.firstName;
+const oprop2 = o1.hobbies[o1.hobbies.length - 1]; // last item in hobbies array
+const oprop3 = o1["address"]["streetName"];
+const text3 = `One of ${oprop1}'s hobbies is ${oprop2} and he/she lives on ${oprop3}`;
+
+console.log(o1.firstName, o1.lastName); // display multiple properties on console
+```
+
+We can also pull values from properties using `const` as below:
+
+<!-- prettier-ignore-start -->
+```js
+const { firstName, lastName } = o1; 
+const { address: { postalCode }} = o1;
+```
+<!-- prettier-ignore-end -->
+
+Now whenever the variable `firstName` is called it will instead as if you're calling `o1.firstName`. For embedded properties like everytime `postalCode` is called, instead it will call `o1.address.postalCode`
+
+#### How to add/replace property to an object:
+
+```js
+o1.email = "johndoe@gmail.com"; // now it's added within o1
+o1.age = 27; // if property already existed, overwrite the value
+```
+
+#### How to delete a property:
+
+```js
 delete o1.address.streetNum;
-
-Array of objects
+```
 
 ---
 
-toc.push({ title: "Array of Objects", shortcut: "`ARROB`" });
-const todos = `{ id: 1, text: "Take out trash", isCompleted: true, }, { id: 2, text: "Meeting with boss", isCompleted: false, }, { id: 3, text: "Dentist appt", isCompleted: false, },`;
+# Array of objects {#ARROB}
 
-print out "Meeting with boss"
-const test1 = todos`1`.text;
+Example of an array of objects:
 
-json is a data format
+```js
+const todos = [
+  { id: 1, text: "Take out trash", isCompleted: true },
+  { id: 2, text: "Meeting with boss", isCompleted: false },
+  { id: 3, text: "Dentist appt", isCompleted: false },
+];
+```
+
+Let's see how to print out "Meeting with boss":
+
+```js
+console.log(todos[1].text);
+```
+
+First we access the item in position 1 the array `todos`, this will refer to the second object found in `todos`. Using the . notation to grab the value of `text` within the object to get us "Meeting with boss".
+
+> JSON is a data format that:
 
 - used a lot in full-stack, using APIs sending/receive data to server (in json format)
 - https:www.freeformatter.com/json-formatter.html
+  - we can take our array of objects and copy and paste on this link to get the json format
 - json format similar to array of objects
 - differences:
   1. double quotes around property names
   2. strings are all in double quotes (no single quotes)
-- knowing this we can format our javacript to be ready to export to a server = JSON.strinigy(arrObj)
+- within JavaScript we can convert our array of objects to be in JSON format ready to be sent to a server with the code below:
 
+```js
 const todoJSON = JSON.stringify(todos);
 console.log(todoJSON);
-
-While loops
-
----
-
-toc.push({ title: "While Loops", shortcut: "`WLOOP`" });
-initialize variable outside of the while statement, then in/decrement inside the loop
-
-function f2() {
-let i = 0;
-creates an ascending array of even number from 0 to 10
-const myArr = ``; while (i <= 10) { myArr.unshift(i); can keep track of what loop number below: console.log(`While Loop Number ${i}`); console.log(myArr`0`); unshift adds to first position
-
-    i += 2;  have to do increment inside the while statement
-
-}
-console.log(myArr);
-}
-
-For loops
+```
 
 ---
 
-toc.push({ title: "For Loops", shortcut: "`FLOOP`" });
-format: for(let x; y; z)
+# For loops {#FLOOP}
 
-- x = initializatin statement (executed only once)
-- y = condition statement (if true execute loop, if false stop)
-- z = final expression (increment/decrement loop counter)
+> format -> `for(let x; y; z)`
+>
+> - `x` = initializatin statement (executed only once)
+> - `y` = condition statement (if true execute loop, if false stop)
+> - `z` = final expression (increment/decrement loop counter)
 
-function f1() {
-creates a descending array from 10 to 0
-const myArr = ``; for (let i = 10; i >= 0; i--) { myArr.push(i); can keep track of what loop number below: console.log(`For Loop Number: ${i}`); console.log(myArr`myArr.length - 1`); push adds to last position
-}
-console.log(myArr);
-}
+Function to check if a number is a prime number or not:
 
-Examples of loops to use in the todos list
+```js
+function isPrime(n) {
+  if (n <= 1) {return false;} // Edge cases (to check for 0, 1 or -ve)
 
----
+  for (let i = 2; i < n; i++) {
+    if (n % i == 0) {return false;}
+    }
 
-toc.push({ title: "Loops Examples", shortcut: "`TODOS`" });
-function f3(todolist, myProp) {
-Data types integrity check:
-if (typeof todolist != "object") {
-return "Invalid! Parameter todolist has to be an array"; an array of objects
-}
+  return true;
+```
 
-if (typeof myProp != "string") {
-return "Invalid! Parameter myProp has to be a string";
-}
-check if myProp is present:
-assumption = if myProp is present, has to be found in every object in the array
-if (todolist`0`.hasOwnProperty(myProp) == false) {
-return myProp + " is not a property in this todolist";
-}
+One way to check if a number is prime number or not is to divide it by each number from 2 to n-1, prime number only have 2 factors (1 and itself), so any division with any other number will give us a remainder.
 
-for (let i = 0; i < todolist.length; i++) {
-console.log(`To-do No. ${i + 1} is ` + `\"${todolist`i`` myProp`}\"`); Using blackslash "\" will let any word or char to escape the quotation mark todolist`i ``myprop`= goes through each item in index i and grab the prop`myProp` is used instead of .myProp = ."string" is not valid
-}
-}
+We initialize the `let i = 2`, because 2 is the smallest possible factor after 1.
 
-f3(todos, "text"); will print the description of each to-do task
+The condition `i < n`, let us divide `n` with every number precedes it as `i` increases 1 number at a time and the loop will ends as it reaches `i == n` (when this statement is true, we know the number is a prime number)
 
-this code below can also cycle through items in array faster
-function f4() {
-for (let todo of todos) {
-this will cycle through each items (todo) in todos
-console.log(todo.text);
-console.log(todo.isCompleted);
-for each object (todo), print the text, then the isCompleted
-and then move on to the next item in the array
+# While loops [#WLOOP]
+
+> initialize variable outside of the while statement, then do increment/decrement inside the loop
+
+Let's see how we can create an ascending array of primer numbers in the range of lowBound (incl.) to hiBound (incl.) using while loop:
+
+```js
+function f1(lowBound, hiBound) {
+  let i = lowBound;
+  const myArr = [];
+  while (i <= hiBound) {
+    if (isPrime(i)) {
+      myArr.push(i);
+      console.log(`In this iteration we're adding: ${myArr[myArr.length - 1]}`);
+    }
+    i++; // have to do increment inside the while statement
+  }
+  console.log(myArr);
 }
+```
+
+We can choose to include that line of template string to keep track of the iteration of the loop. When the function `f1` is called it will display each instance of iteration (that should be equal to the length of the array produced)
+
+## Examples of loops to use in a todo list
+
+```js
+function f2(todolist, myProp) {
+  // Data types integrity check:
+  if (typeof todolist != "object") {
+    return "Invalid! Parameter todolist has to be an array"; // an array of objects
+  }
+
+  if (typeof myProp != "string") {
+    return "Invalid! Parameter myProp has to be a string";
+  }
+  // check if myProp is present:
+  // assumption = if myProp is present, has to be found in every object in the array
+  if (todolist[0].hasOwnProperty(myProp) == false) {
+    return myProp + " is not a property in this todolist";
+  }
+
+  for (let i = 0; i < todolist.length; i++) {
+    console.log(`To-do No. ${i + 1} is ` + `\"${todolist[i][myProp]}\"`);
+    // [myProp] is used instead of .myProp = ."string" is not valid
+  }
 }
+```
+
+> Using backslash \ in a string let any word or char to escape the quotation mark (appear as a character not feature) in the string.
+
+`todolist[i][myProp]` let us go through each item in the Array and grab the value for the property as `i` increases by 1 within the loop.
+
+`[myProp]` is used instead of `.myProp` because we take in a string as a parameter in `f2`, and `object."property"` is not a valid syntax.
+
+> `f3(todos, "text")`; will print the description of each to-do task
+
+this code below can also cycle through items in array faster (specialized for statement)
+
+```js
+function f3() {
+  for (let todo of todos) {
+    console.log(todo.text);
+    console.log(todo.isCompleted);
+  }
+}
+```
+
+> `for (let todo of todos)` this will cycle through each items (todo) in todos
+
+the statements inside the curly brackets will be executed for each item in the array, (i.e. for each todo, print the value of `todo.text`, then print `todo.isCompleted`, then move on to the next item)
 
 High Order Array Methods
 
