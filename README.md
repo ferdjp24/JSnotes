@@ -462,7 +462,7 @@ function f2(todolist, myProp) {
 
 `[myProp]` is used instead of `.myProp` because we take in a string as a parameter in `f2`, and `object."property"` is not a valid syntax.
 
-> `f3(todos, "text")`; will print the description of each to-do task
+> `f2(todos, "text")`; will print the description of each to-do task
 
 this code below can also cycle through items in array faster (specialized for statement)
 
