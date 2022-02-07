@@ -10,8 +10,8 @@
 - [Array of Objects](#array-of-objects-arrob)
 - Loops
 
-  - While Loop
-  - For Loop
+  - [For Loop](#for-loops-floop)
+  - [While Loop](#while-loops-wloop)
   - Examples (to-do-list)
 
 - High Order Array Methods
