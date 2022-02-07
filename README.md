@@ -1,22 +1,23 @@
 # Table of Contents
 
-- [Introduction](#introduction-intro)
-- [Variables & Data Types](#variables--data-types-vardt)
-  - Concatenation
-  - Template String
-- [String Properties & Methods](#string-properties--methods-strpm)
-- [Arrays](#array-properties--methods-arrpm)
-- [Object Literals](#object-literals-objct)
-- [Array of Objects](#array-of-objects-arrob)
+- [Introduction](#introduction)
+- [Variables & Data Types](#variables--data-types)
+  - [Concatenation](#concatenation)
+  - [Template String](#template-string)
+- [String Properties & Methods](#string-properties--methods)
+- [Arrays](#array-properties--methods)
+- [Object Literals](#object-literals)
+- [Array of Objects](#array-of-objects)
 - Loops
 
-  - [For Loop](#for-loops-floop)
-  - [While Loop](#while-loops-wloop)
-  - Examples (to-do-list)
+  - [For Loop](#for-loops)
+  - [While Loop](#while-loops)
+  - [Examples (to-do-list)](#examples-of-loops-to-use-in-a-todo-list)
 
-- High Order Array Methods
-- Conditionals
-  - Ternary Operator
+- [High Order Array Methods](#high-order-array-methods)
+- [Conditionals](#conditionals)
+  - [Ternary Operator](#ternary-operator)
+  - [Switches](#switches)
 - Functions
   - Arrow Functions
 - Object Oriented Programming (OOP)
@@ -27,7 +28,7 @@
 
 ---
 
-# Introduction {#INTRO}
+# Introduction
 
 - JavaScript is a high level, interpreted programming language (no need to worry about memory management)
 - language of the front-end (client/browser) + back-end (server = Node.js)
@@ -52,7 +53,7 @@
 
 ---
 
-# Variables & Data Types {#VARDT}
+# Variables & Data Types
 
 ```js
 var common = 2;
@@ -126,7 +127,7 @@ This will produce the same result as the example in concatenation without having
 
 ---
 
-# String Properties & Methods {#STRPM}
+# String Properties & Methods
 
 > PROPERTIES don't have ( ) after it &
 > METHODS are functions associated with an object.
@@ -169,7 +170,7 @@ s2.toUpperCase().split(", ") -> ["TECH", "COMPUTERS", "IT", "CODE"]
 
 ---
 
-# Array Properties & Methods {#ARRPM}
+# Array Properties & Methods
 
 > an array is an object that hold multiple values (multi types too)
 
@@ -271,7 +272,7 @@ a2.indexOf(4) == -1;
 
 ---
 
-# Object Literals {#OBJCT}
+# Object Literals
 
 > object works like key, value pair; object = {key1: value1, key2: value2, ...}
 
@@ -343,7 +344,7 @@ delete o1.address.streetNum;
 
 ---
 
-# Array of objects {#ARROB}
+# Array of objects
 
 Example of an array of objects:
 
@@ -352,6 +353,8 @@ const todos = [
   { id: 1, text: "Take out trash", isCompleted: true },
   { id: 2, text: "Meeting with boss", isCompleted: false },
   { id: 3, text: "Dentist appt", isCompleted: false },
+  { id: 4, text: "Water the plants", isCompleted: true },
+  { id: 5, text: "Walk the dog", isCompleted: true },
 ];
 ```
 
@@ -381,7 +384,7 @@ console.log(todoJSON);
 
 ---
 
-# For loops {#FLOOP}
+# For loops
 
 > format -> `for(let x; y; z)`
 >
@@ -408,7 +411,7 @@ We initialize the `let i = 2`, because 2 is the smallest possible factor after 1
 
 The condition `i < n`, let us divide `n` with every number precedes it as `i` increases 1 number at a time and the loop will ends as it reaches `i == n` (when this statement is true, we know the number is a prime number)
 
-# While loops [#WLOOP]
+# While loops
 
 > initialize variable outside of the while statement, then do increment/decrement inside the loop
 
@@ -479,184 +482,212 @@ function f3() {
 
 the statements inside the curly brackets will be executed for each item in the array, (i.e. for each todo, print the value of `todo.text`, then print `todo.isCompleted`, then move on to the next item)
 
-High Order Array Methods
-
 ---
 
-toc.push({ title: "High Order Array Methods", shortcut: "`HOARM`" });
-format: myArray.method(function(a, ...) {xyz})
+# High Order Array Methods
 
-- a = variable to use for each instance in myArray
+format: `myArray.method(function(i, ...) {abc}})`
+
+- `i` = variable to use for each instance in myArray
   see
 
-  1.) forEach = loops through each items in the array
+### 1.) `forEach` = loops through each items in the array
 
-- xyz = what will be executed for each loop
-  function f5() {
+- `abc` = what will be executed for each loop
+
+Example of a function to print the id's of each of the todo task in todos:
+
+```js
+function f4() {
   todos.forEach(function (todo) {
-  console.log(todo.id);
+    console.log(todo.id);
   });
-  }
-  2.) map = create a new array from an array (assign value with const newArray)
-- xyz = return xyz -> push(xyz) into the new array
-  function f6() {
+}
+```
+
+### 2.) `map` = create a new array from an array (assign value with `const newArray = ...`)
+
+- `abc` = in the format of: `return i.myProp` -> will cause `push(i.myProp)` into a new array (can be assigned)
+
+```js
+function f5() {
   const todoText = todos.map(function (todo) {
-  return todo.text; for EACH instance, push the (todo.text)
+    return todo.text; // for EACH instance, push the (todo.text)
   });
   console.log(todoText);
-  }
-  3.) filter = create a new array based on a condition (only part of the original)
-- xyz = return (cond.) -> push each instance in which the condition is met
-  function f7() {
+}
+```
+
+### 3.) `filter` = create a new array based on a condition (only part of the original)
+
+- `abc` = in the format of : `return (cond.)` -> push each instance in which the condition is met
+
+```js
+function f6() {
   const todoNotCompleted = todos.filter(function (todo) {
-  return todo.isCompleted === false; for EACH return TRUE, push the (todo)
+    return todo.isCompleted === false; // for EACH evaluation that returns TRUE, push the (todo)
   });
   console.log(todoNotCompleted);
-  }
-  Combining methods
-  first filter only the odd id, out of the odd id, which one is completed, then print
-  function f8() {
+}
+```
+
+## Combining methods
+
+Example: A function that creates a new array which includes the description of all the tasks that has **_odd id_** and is **_completed_**:
+
+```js
+function f7() {
   const todoOddText = todos
-  .filter(function (todo) {
-  return todo.id % 2 == 1; create newArray1 = only odd ids
-  })
-  .filter(function (todoOdd) {
-  return todoOdd.isCompleted === true; newArray1.filter(...) -> create newArray2
-  })
-  .map(function (completed) {
-  return completed.text; newArray2.map(...) = last method -> assigned to todoOddText
-  })
-  .forEach((oddCompleted) => console.log(oddCompleted)); see `ARWFC` -> one-liner
+    .filter(function (todo) {
+      return todo.id % 2 == 1; // create newArray1 = only odd ids
+    })
+    .filter(function (todoOdd) {
+      return todoOdd.isCompleted === true; // newArray1.filter(...) -> create newArray2
+    })
+    .map(function (completed) {
+      return completed.text; // newArray2.map(...) -> assigned to todoOddText
+    });
+  console.log(todoOddText);
+}
+```
+
+---
+
+# Conditionals
+
+## If Statements
+
+> format: `if (cond) {expression} else if (cond) {expr.} else {expr.}`
+
+- `==` is equal to (e.g. `[10] == "10"` -> True)
+- `!=` is not equal to (e.g. `10 != "Ten"` -> True)
+- `===` is exactly the same as (e.g. `10 === 10.0` -> True)
+- `!==` is not exactly the same as (e.g. `10.0 !== [10]` -> True)
+
+```js
+function isTen(x) {
+  if (x === 10) {
+    console.log("Yup, that is 10, === matches data type! (exact same)");
+  } else if (x == 10) {
+    console.log("This is 10? == does not match data type! (can be string)");
+  } else {
+    console.log("This is not 10 :(");
   }
-
-Conditionals
-
----
-
-toc.push({ title: "Conditionals", shortcut: "`CONDI`" });
-if, else if, else statements
-format: if (cond) {expression} else if (cond) {expr.} else {expr.}
-
-== is equal to (e.g. `10` == "10" -> True)
-!= is not equal to (e.g. 10 != "Ten" -> True)
-=== is exactly the same as (e.g. 10 === 10.0 -> True)
-!== is not exactly the same as (e.g. 10.0 !== `10` -> True)
-function isTen(n) {
-if (n === 10) {
-console.log("=== matches data type! (exact same)");
-} else if (n == 10) {
-console.log("== does not match data type! (can be string)");
-} else {
-console.log("is not 10");
 }
-} `10` == "10.0" is False
+```
 
-OR (||) + AND (&&)
-can help shorten code instead of nesting if statements
+- OR `||` + AND `&&` can help shorten code instead of nesting `if` statements
 
-function smallerThanFive(x, y) {
-if (x < 5 && y < 5) {
-console.log("both are smaller than 5");
-} else if (x < 5 || y < 5) {
-console.log("either x or y are smaller than 5");
-} else {
-console.log("neither are smaller than 5");
+Example: A function to check if a number is single digit negative number OR a prime number:
+
+```js
+function f8(n) {
+  if ((n < 0 && n > -10) || isPrime(n)) {
+    return true;
+  } else {
+    return false;
+  }
 }
-}
+```
 
-Ternary operator
+## Ternary operator
 
----
+> commonly used to assign different value for a true/false evaluation
 
-toc.push({ title: "Ternary Operator", shortcut: "`TEROP`" });
-commonly used to assign value based on a condition (if statements alt.)
-format: const x = (cond.) ? (if true) : (if false)
-can nest ternary operator within the (if true/false)
+> format: `const x = (cond.) ? (if true) : (if false)`
 
+Example: A function that returns the outcome of a match between A and B:
+
+```js
 function f9(a, b) {
-const score = a === b ? "Draw" : a > b ? "A wins" : "B wins";
-return score;
+  const score = a === b ? "Draw" : a > b ? "A wins" : "B wins";
+  return score;
 }
+```
 
-Swtiches
+We can nest ternary operator within the true or false outcome, in this example if the `a === b` (cond.) evaluation is true it will update `score` as "Draw". If the `a === b` is false then it will evaluate another ternary operator with `a > b` as the (cond.) and update `score` accordingly.
 
----
+## Switches
 
-format:
-switch(val) {
-case (cond1): case values are tested with strict equality (===)
-do ...;
-break;
-case (cond 2): ...
-do ...;
-break;
-default:
-(default expression)...;
-}
+> each case is evaluated with a strict equality `===`
 
+```js
 function f10(val) {
-let answer = "";
-switch (val) {
-case 1:
-case 2:
-answer = "Low Score...";
-break;
-case 3:
-case 4:
-answer = "Good Score!";
-break;
-case 5:
-answer = "Perfect!!!";
-break;
-default:
-answer = "Try again.";
+  let answer = "";
+  switch (val) {
+    case 1:
+    case 2:
+      answer = "Low Score...";
+      break;
+    case 3:
+    case 4:
+      answer = "Good Score!";
+      break;
+    case 5:
+      answer = "Perfect!!!";
+      break;
+    default:
+      answer = "Try again.";
+  }
+  return answer;
 }
-return answer;
-}
+```
 
-Functions
+Each case can be any data type, if the parameter for the switch does not match any of the cases, the default statement will be executed.
 
 ---
 
-toc.push({ title: "Functions", shortcut: "`FUNCT`" });
+# Functions
+
+```js
 function addNums(n = 1, m = -3) {
-total = n + m;
-console.log(total);
-within a function parameter, we can set default value,
-if no value is assigned the default will be assigned
-if values assigned, it will overwrite the default values.
+  console.log(n + m);
 }
+```
 
-Arrow Functions
+within a function parameter, we can set default value. When calling the function:
 
----
+- If we do not assign parameters, the default value will be used.
+- if we assign the parameters, it will overwrite the default values.
 
-toc.push({ title: "Arrow Functions", shortcut: "`ARWFC`" });
-format:
-const (functionName) = (para1, para2, ...) => (function body)
-one-liner function body doesn't need {} and will return the expression
+```js
+addNums() -> -2;
+addNums(3) -> 0;
+addNums(3, 1) -> 4;
+addNums(11 % 3, 10 / 2) -> 7;
+```
 
-same example function as above written in arrow function format
-const addTwoNums = (n = -4, m = -3) => {
-total = n + m;
-console.log(total);
+## Arrow Functions
+
+Instead of calling `function ...`, we can use `const ...` to make a function
+
+> format:
+> `const (functionName) = (para1, para2, ...) => (function body)`
+
+Example: Same function as above, but written in arrow function format:
+
+```js
+const addTwoNums = (n = -4, m = -1) => {
+  console.log(n + m);
 };
+```
 
-same example, with one-liner
+> one-liner function body doesn't need `{}` and will return the expression
+
+Example: Same function, with one-liner: (return instead of console.log)
+
+```js
 const addTwoNumbers = (n = 1, m = 1) => n + m;
+```
 
-calling all of these functions are the same, functionName(parameters)
-addNums() log displays -2, returns undefined
-addTwoNums(1,1) log displays 2 returns undefined
-addTwoNumbers(4) log display nothing, returns 1 `only assign value to first para`
+Another one-liner example: A function that counts the number of tasks in `todos` that **_have yet to be completed_**
 
-one-liner example, filter todos for incompletion, then print text
-see `HOARM` for methods explanation (long function version)
-const f11 = () => {
-todos
-.filter((todo) => todo.isCompleted === false)
-.forEach((incompleted) => console.log(incompleted.text));
-};
+```js
+const f11 = () => todos.filter
+}
+```
+
+> see [High Order Array Methods](#high-order-array-methods) for full explanation (long function version)
 
 Lexical This (not covered in depth in the course)
 
@@ -677,3 +708,7 @@ DOM Manipulation
 ---
 
 toc.push({ title: "DOM Manipulation", shortcut: "`DOMMA`" });
+
+```
+
+```
