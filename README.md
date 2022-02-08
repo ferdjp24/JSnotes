@@ -672,19 +672,30 @@ const addTwoNums = (n = -4, m = -1) => {
 };
 ```
 
-> one-liner function body doesn't need `{}` and will return the expression
-
 Example: Same function, with one-liner: (return instead of console.log)
 
 ```js
 const addTwoNumbers = (n = 1, m = 1) => n + m;
 ```
 
+> one-liner function body doesn't need `{}` and will return the expression
+
 Another one-liner example: A function that counts the number of tasks in `todos` that **_have yet to be completed_**
 
 ```js
-const f11 = () => todos.filter
-}
+const f11 = () => todos.filter((todo) => todo.isCompleted === false).length}
+```
+
+Example: A function that prints out all the **_completed_** tasks followed by a line of reminder of how many **_uncompleted_** tasks.
+
+```js
+const f12 = () => {
+  todos
+    .filter((todo) => todo.isCompleted === true)
+    .forEach((completed) => console.log(completed.text));
+
+  console.log(`There are ${f11()} uncompleted task(s)`);
+};
 ```
 
 > see [High Order Array Methods](#high-order-array-methods) for full explanation (long function version)
