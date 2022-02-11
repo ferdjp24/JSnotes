@@ -18,9 +18,12 @@
 - [Conditionals](#conditionals)
   - [Ternary Operator](#ternary-operator)
   - [Switches](#switches)
-- Functions
-  - Arrow Functions
-- Object Oriented Programming (OOP)
+- [Functions](#functions)
+  - [Arrow Functions](#arrow-functions)
+- [Object Oriented Programming (OOP)](#object-oriented-programming-oop)
+  - [Constructor functions](#constructor-functions)
+  - [ECMAScript 2015 / ES6 Class](#class-es6)
+  - [Date Object](#date-object)
 - DOM Selection
 - DOM Manipulation
 - Events
@@ -745,7 +748,7 @@ The calling of `this.` inside the constructor function refers to the local objec
 > Creating the object from the constructor function, using `new Object(values)`
 
 ```js
-const person1 = new Person("John", "Doe", "3-20-1990");
+const person1 = new Person("John", "Doe", "20 Mar 1990");
 console.log(person1.dob.getFullYear()) -> // show the birth year of person1
 
 person1.changeName("Smith") // calling a method
@@ -775,4 +778,89 @@ In this example we can see the parameters name doesn't have to be the same as th
 
 Declaring the method outside of the constructor function allow us to put the method in the prototype of the object and will not show up as one of the properties.
 
+## Class (ES6)
+
+> Syntactic sugar = express code in an easier and prettier way = preferred
+
+Example: the same object constructor as previous example
+
+```js
+class Friend {
+  constructor(firstName, lastName, dob) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.dob = new Date(dob);
+  }
+
+  getBirthYear() {
+    return this.dob.getFullYear();
+  }
+
+  getFullName() {
+    return `${firstName} ${lastName}`;
+  }
+
+  changeName(name) {
+    this.firstName = name;
+  }
+}
+```
+
+Using this method, we instantiate object and access properties the same way as before, everything starting from the constructor to the methods all found within the `class` declaration and any methods will automatically goes into the prototype of the object.
+
 ### Date object
+
+> built-in object class that meant to display date
+
+4 Ways to create new date object:
+
+```js
+new Date(); // no parameter will create current date + time
+new Date(milliseconds); // only passing 1 number parameter
+new Date(year, month, day, hours, minutes, seconds, milliseconds);
+new Date("date string");
+```
+
+Passing more than one number parameters will be assigned as shown in the third line. in JavaScript, the month parameter counts from 0 to 11 (`January = 0`)
+
+> specifying the month parameter higher than 11 will add the overflow to the year, same principle applies to day parameter:
+
+```js
+const d1 = new Date(2019, 1, 24, 10, 33, 30);
+const d2 = new Date(2018, 13, 24, 10, 33, 30); // 11 = December
+const d3 = new Date(2019, 0, 55, 10, 33, 30); // minus 31 days in Jan
+```
+
+All the dates above refer to `24 Feb 2019`
+
+> one and two digits years will be interpreted as 19xx:
+
+```js
+const d4 = new Date(9, 4, 4); // May 4, 1909
+const d5 = new Date(99, 4, 4); // May 4, 1999
+```
+
+In the example given for [Constructor functions](#constructor-functions), `dob` is passed on as a parameter to be the value in `new Date`, since it is not possible to input `(2019,11,30)` as a parameter, we will take `dob` as a _dateString_ instead to create the date object.
+
+```js
+const ISODate = "2015-03-25"; // "YYYY-MM-DD"
+const shortDate = "03/25/2015"; // "MM/DD/YYYY"
+const longDate = "25 Mar 2015"; // "DD mmm YYYY" or "mmm DD YYYY"
+```
+
+ISO Date is relative to the computer date time zone, the above example could be March 24 or March 25.
+
+#### Date Object Methods
+
+```js
+d1.toString() == "Sun Feb 24 2019 10:33:30 GMT-0500 (Eastern Standard Time)";
+d1.toUTCString() == "Sun, 24 Feb 2019 15:33:30 GMT";
+d1.toDateString() == "Sun Feb 24 2019";
+d1.toISOString() == "2019-02-24T15:33:30.000Z";
+
+const d6 = new Date(0); // the milliseconds conversion date reference
+const msec = Date.parse(longDate); // the number of milliseconds between d6 and 25 Mar 2015
+const d7 = new Date(msec); // gives us the date object for 25 Mar 2015
+```
+
+Among other methods like `getFullYear()`, `getDate()` (day as number, 1-31), `getDay()` (day of the week, 0 (Sun) - 6(Sat))
