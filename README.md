@@ -24,14 +24,17 @@
   - [Constructor functions](#constructor-functions)
   - [ECMAScript 2015 / ES6 Class](#class-es6)
   - [Date Object](#date-object)
-- DOM Selection
-- DOM Manipulation
-- Events
-- Basic Form Validation
+- Document Object Model
+  - [Selection](#document-object-model-dom-selection)
+  - [Manipulation](#document-object-model-dom-manipulation)
+- [Events](#events)
+- [Basic Form Validation](#basic-form-validation)
 
 ---
 
 # Introduction
+
+> Materials from https://www.youtube.com/watch?v=hdI2bqOjy3c (Traversy Media, "JavaScript Crash Course for Beginners")
 
 - JavaScript is a high level, interpreted programming language (no need to worry about memory management)
 - language of the front-end (client/browser) + back-end (server = Node.js)
@@ -864,3 +867,163 @@ const d7 = new Date(msec); // gives us the date object for 25 Mar 2015
 ```
 
 Among other methods like `getFullYear()`, `getDate()` (day as number, 1-31), `getDay()` (day of the week, 0 (Sun) - 6(Sat))
+
+---
+
+# Document Object Model (DOM) Selection
+
+<!-- Import HTML/CSS files from https://embed.plnkr.co/plunk/8ujYdL1BxZftGoS4Cf14 -->
+
+- DOM provides a structured representation of the document as a tree
+- a standard for how to get, change, add, or delete elements in the tree
+- Selection = taking HTML elements and put them into variables etc.
+- In the browser, there's a `window` object = parent object of the browser = top-level object in which other functions and objects are found.
+- within `window` object, the `document` object makes up the DOM that has the methods and the properties that we can work with
+
+## Single Element Selector
+
+```js
+const id1 = document.getElementById("my-form");
+const query1 = document.querySelector("h1");
+```
+
+- Using `getElementById()`, we can grab the form with the specific **_Id_** and display it or in this case we assigned it to the variable `form1`
+- Using `querySelector()`, we can select anything other than id (previously done with jQuery)
+  - since this is a single element selector, if we have multiple `h1` tags in the HTML file, it will only select the first one
+  - syntax for other elements apply, like `.class`, `#id`, `tag`
+
+## Multiple Element Selector
+
+<!-- uncommented the ul with 3 items for example purposes -->
+
+```js
+const oldMethod1 = document.getElementsByClassName("item"); // no need .
+const oldMethod2 = document.getElementsByTagName("li");
+const query2 = document.querySelectorAll(".item");
+```
+
+- Since there are multiple items selected using this selector, it will put them all in a `NodeList` (similar to an array)
+- We can use methods for array to the `NodeList`
+
+```js
+query2.forEach((item) => console.log(item)); // console.log each item
+```
+
+# Document Object Model (DOM) Manipulation
+
+```js
+query1.remove(); // remove the item(s) selected by the query from the DOM
+const query3 = document.querySelector(".items");
+
+query3.lastElementChild.remove(); // first grab the last element child of the ul "items" which is "Item 3" then remove it
+query3.firstElementChild.textContent = "Hello"; // change text
+query3.children[1].innerText = "World"; // children[index]
+query3.children[0].innerHTML = "<h2>Hello</h2>"; // HTML tags
+```
+
+Using these methods we can modify the content of the HTML without having to manually rewrite the HTML file itself
+
+```js
+const query4 = document.querySelector(".btn");
+query4.style.background = "teal";
+```
+
+Compared to preseting style in CSS, manipulating styles in JavaScript can be done dynamically (in response to certain [events](#events) for example)
+
+---
+
+# Events
+
+format:
+
+```js
+element.addEventListener('action', function (when action is done))
+```
+
+Example for button:
+
+```js
+query4.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("Thank you for your submission.");
+  query4.remove();
+});
+```
+
+Another dynamic styling example:
+
+```js
+query4.addEventListener("mouseover", (e) => {
+  e.preventDefault();
+  document.querySelector("#my-form").style.background = "black";
+  document.querySelector("header").style.background = "black";
+  document
+    .querySelectorAll(".item")
+    .forEach((item) => (item.style.background = "black"));
+  document.querySelector("body").classList.add("bg-dark");
+});
+```
+
+In the above example, to modify the style for each item within `ul` we cannot simply `document.querySelectorAll(."item").style` because the multiple element selector returns a `NodeList`
+
+Since our body tag doesn't have a class yet, `classList.add()` will add a class to it, `bg-dark` is a class defined in style.css file
+
+---
+
+# Basic Form Validation
+
+> small application of a form that takes in the name and email inputs and displaying the user below the form
+
+We want to grab some elements from the DOM to manipulate to make the form works
+
+<!-- commented out the ul with 3 items again -->
+
+```js
+const myForm = document.querySelector("#my-form");
+const nameInput = document.querySelector("#name");
+const emailInput = document.querySelector("#email");
+const msg = document.querySelector(".msg");
+const userList = document.querySelector("#users");
+```
+
+Currently the `<div>` with class `msg` is empty, we wants to select this class to manipulate them dynamically as we manipulate the form
+
+The id `#name` and `#email` is enclosed in `<input>` that will be inputted as a text
+
+The id `#users` is currently an empty unordered list that will store the users as we add them in.
+
+Let's add the event when a user submit the form:
+
+```js
+myForm.addEventListener("submit", onSubmit); // can call in an external function
+
+function onSubmit(e) {
+  e.preventDefault();
+
+  // Make sure all fields are not empty
+  if (nameInput.value === "" || emailInput.value === "") {
+    msg.classList.add("error");
+    msg.innerHTML = "Please enter both fields";
+    setTimeout(() => msg.remove(), 3000); // setTimeout(function, milliseconds)
+  } else {
+    // Creating a new list item to contain the information
+    const li = document.createElement("li");
+    li.appendChild(
+      document.createTextNode(`${nameInput.value} (${emailInput.value})`) // add Text node to the child of the newly created li
+    );
+
+    // Adding the newly created li to #users ul
+    userList.appendChild(li);
+
+    // Clear the fields for next user
+    nameInput.value = "";
+    emailInput.value = "";
+  }
+}
+```
+
+- `setTimeout(function, milliseconds)` can be used to make the error message disappear after 3 seconds
+- it is a good practice to add text node to the new `li` instead of just adding text to `innerHTML`
+- Can be paired with other event such as style changes, etc.
+- So far we only manipulate the UI, when webpage is reloaded none of the changes going to be saved
+- Saving changes requires manipulation to either a local storage (user specific) or a server (sending requests and data exchange)
