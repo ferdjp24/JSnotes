@@ -320,12 +320,11 @@ console.log(o1.firstName, o1.lastName); // display multiple properties on consol
 
 We can also pull values from properties using `const` as below:
 
-<!-- prettier-ignore-start -->
+<!-- prettier-ignore -->
 ```js
 const { firstName, lastName } = o1; 
 const { address: { postalCode }} = o1;
 ```
-<!-- prettier-ignore-end -->
 
 Now whenever the variable `firstName` is called it will instead as if you're calling `o1.firstName`. For embedded properties like everytime `postalCode` is called, instead it will call `o1.address.postalCode`
 
@@ -700,26 +699,80 @@ const f12 = () => {
 
 > see [High Order Array Methods](#high-order-array-methods) for full explanation (long function version)
 
-Lexical This (not covered in depth in the course)
-
-Object Oriented Programming (OOP)
+## Lexical This (not covered in depth in the course)
 
 ---
 
-toc.push({ title: "Object Oriented Programming", shortcut: "`OBJOR`" });
+# Object Oriented Programming (OOP)
 
-(DOM) Selection
+> We can construct objects using constructor functions, with prototype
 
----
+## Constructor Functions
 
-toc.push({ title: "DOM Selection", shortcut: "`DOMSE`" });
+format:
 
-DOM Manipulation
-
----
-
-toc.push({ title: "DOM Manipulation", shortcut: "`DOMMA`" });
-
+<!-- prettier-ignore -->
+```js
+function Object(para1, para2) {  // function name Object is capitalized
+  this.prop1 = para1;
+  this.prop2 = para2;
+}
 ```
 
+Example:
+
+<!-- prettier-ignore -->
+```js
+function Person(firstName, lastName, dob) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.dob = new Date(dob);
+  this.species = "Human"; // add a constant property to all Person object
+  this.getFullName = function () {
+    return `This person's name is ${this.firstName} ${this.lastName}`;
+  };
+}
 ```
+
+Whenever we construct with this function, we first parameter we pass on with the function will be the value for the `firstName` property and so on.
+
+The above example we set the value for the property `dob` to be an object that will be created using the `Date` constructor function [more on Date function](#date-object)
+
+The calling of `this.` inside the constructor function refers to the local object, if for example in the template string we put `${lastName}` instead of `${this.lastName}` it will refer to the parameter instead of the object's property and will not changed when `changeName` method is executed.
+
+## Instantiate object
+
+> Creating the object from the constructor function, using `new Object(values)`
+
+```js
+const person1 = new Person("John", "Doe", "3-20-1990");
+console.log(person1.dob.getFullYear()) -> // show the birth year of person1
+
+person1.changeName("Smith") // calling a method
+console.log(person1.getFullName()) -> // is now John Smith instead of John Doe
+```
+
+With `Person` constructor, the object created will have the methods as part of the properties of the object itself, calling `console.log(person1)` will show all the properties including the methods with a function as values. To hide this we can put any methods into the prototype of the object.
+
+Example:
+
+<!-- prettier-ignore -->
+```js
+function Pet(petName, petSpecies, owner) {
+  this.name = petName;
+  this.species = petSpecies;
+  this.owner = owner;
+}
+
+Pet.prototype.changeOwner = function(name) {this.owner = name}
+
+const pet1 = new Pet("Twig", "Deerfox", "Troll")
+pet1.changeOwner("Hilda")
+console.log(pet1.owner) -> // is now "Hilda" instead of "Troll"
+```
+
+In this example we can see the parameters name doesn't have to be the same as the property name (but it's good to give both the parameters and properties meaningful names)
+
+Declaring the method outside of the constructor function allow us to put the method in the prototype of the object and will not show up as one of the properties.
+
+### Date object
