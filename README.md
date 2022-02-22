@@ -29,12 +29,14 @@
   - [Manipulation](#document-object-model-dom-manipulation)
 - [Events](#events)
 - [Basic Form Validation](#basic-form-validation)
+- [Local Storage](#local-storage)
 
 ---
 
 # Introduction
 
 > Materials from https://www.youtube.com/watch?v=hdI2bqOjy3c (Traversy Media, "JavaScript Crash Course for Beginners")
+> Local storage tutorial from https://www.youtube.com/watch?v=k8yJCeuP6I8 (dcode, "How to use Local Storage in JavaScript")
 
 - JavaScript is a high level, interpreted programming language (no need to worry about memory management)
 - language of the front-end (client/browser) + back-end (server = Node.js)
@@ -353,13 +355,14 @@ delete o1.address.streetNum;
 
 Example of an array of objects:
 
+<!-- prettier-ignore -->
 ```js
 const todos = [
-  { id: 1, text: "Take out trash", isCompleted: true },
-  { id: 2, text: "Meeting with boss", isCompleted: false },
-  { id: 3, text: "Dentist appt", isCompleted: false },
-  { id: 4, text: "Water the plants", isCompleted: true },
-  { id: 5, text: "Walk the dog", isCompleted: true },
+  { id: 1, text: "Take out trash", isCompleted: true, date: new Date("10 March 2021") },
+  { id: 2, text: "Meeting with boss", isCompleted: false, date: new Date("15 March 2021") },
+  { id: 3, text: "Dentist appt", isCompleted: false, date: new Date("10 Feb 2021") },
+  { id: 4, text: "Water the plants", isCompleted: true, date: new Date("10 May 2021") },
+  { id: 5, text: "Walk the dog", isCompleted: true, date: new Date("10 March 2020") },
 ];
 ```
 
@@ -536,6 +539,42 @@ function f6() {
 }
 ```
 
+### 4.) `find` = return the first occurence of the condition
+
+```js
+function completeTask(id) {
+  todos.find((task) => task.id === id);
+}
+```
+
+### 5.) `sort` = sort the array based on conditions
+
+- `i1, i2` = takes in 2 parameter (items in the array) to compare
+- `abc` = will return 1 or -1 (depending on conditions)
+
+```js
+const sortedDate = todos.sort((a, b) => (a.date > b.date ? 1 : -1));
+// sorted date in ascending order
+// last entry = most recent
+const sortedId = todos.sort((a, b) => b.id - a.id);
+// a - b = ascending
+// b - a = descending
+```
+
+### 6.) `reduce` = can be used to group a category (in iterations)
+
+- `i1, i2, ...` = the parameter of iterations
+- `abc, start` = iteration executions, `start` is the initial value of i1
+  using a simple (but as useful) examples
+
+```js
+const idSum = todos.reduce((total, task) => total + task.id, 0);
+const textCombine = todos.reduce(
+  (giantString, task) => giantString + task.text,
+  ""
+);
+```
+
 ## Combining methods
 
 Example: A function that creates a new array which includes the description of all the tasks that has **_odd id_** and is **_completed_**:
@@ -704,8 +743,6 @@ const f12 = () => {
 ```
 
 > see [High Order Array Methods](#high-order-array-methods) for full explanation (long function version)
-
-## Lexical This (not covered in depth in the course)
 
 ---
 
@@ -1027,3 +1064,33 @@ function onSubmit(e) {
 - Can be paired with other event such as style changes, etc.
 - So far we only manipulate the UI, when webpage is reloaded none of the changes going to be saved
 - Saving changes requires manipulation to either a local storage (user specific) or a server (sending requests and data exchange)
+
+---
+
+# Local Storage
+
+> Stored locally in the user's browser domain `window.localStorage`
+
+## Methods
+
+> `clear()` = clear the local storage
+
+> `setItem("key", "value")` = add a key:value item in the storage, both parameters take in string
+
+> `removeItem("key")` = remove the key from the local storage
+
+Items in the local storage will be stored in the browser even if the initial `setItem` code is deleted from the JavaScript, unless we're using localStorage methods to remove the data, it will not be removed by simply deleting the code.
+
+> `getItem("key")` = returns the value of the key
+
+> `key(n)` = returns the key string when an index is passed
+
+```js
+localStorage.setItem("name", "Bob");
+localStorage.setItem("age", "30");
+localStorage.getItem("name"); // returns "Bob"
+localStorage.key(0); // returns "name"
+localStorage.removeItem("name");
+localStorage.getItem("name"); // returns null
+localStorage.key(0); // returns "age"
+```

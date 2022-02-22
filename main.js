@@ -50,3 +50,49 @@ function onSubmit(e) {
     emailInput.value = "";
   }
 }
+
+const todos = [
+  {
+    id: 1,
+    text: "Take out trash",
+    isCompleted: true,
+    date: new Date("10 March 2021"),
+  },
+  {
+    id: 2,
+    text: "Meeting with boss",
+    isCompleted: false,
+    date: new Date("15 March 2021"),
+  },
+  {
+    id: 3,
+    text: "Dentist appt",
+    isCompleted: false,
+    date: new Date("10 Feb 2021"),
+  },
+  {
+    id: 4,
+    text: "Water the plants",
+    isCompleted: true,
+    date: new Date("10 May 2021"),
+  },
+  {
+    id: 5,
+    text: "Walk the dog",
+    isCompleted: true,
+    date: new Date("10 March 2020"),
+  },
+];
+
+function completeTask(id) {
+  todos.find((task) => task.id === id).isCompleted = true;
+}
+
+// const sortedDate = todos.sort((t1, t2) => (t1.date > t2.date ? 1 : -1));
+
+// const sortedId = todos.sort((a, b) => b.id - a.id);
+const idSum = todos.reduce((total, task) => total + task.id, 0);
+const textCombine = todos.reduce(
+  (giantString, task) => giantString + task.text,
+  ""
+);
